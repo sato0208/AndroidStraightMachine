@@ -55,4 +55,10 @@ class MainActivity : AppCompatActivity() {
         val soundId6 = soundPool.load(this, R.raw._game_healer_lose1, 1)
 
     }
+
+    override fun onPause() {
+        super.onPause()
+//        使い終わった音ファイルを後片付け
+        soundPool.release()
+    }
 }
