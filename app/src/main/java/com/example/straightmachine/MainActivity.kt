@@ -1,6 +1,9 @@
 package com.example.straightmachine
 
+import android.media.AudioAttributes
+import android.media.AudioManager
 import android.media.SoundPool
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
@@ -34,18 +37,19 @@ class MainActivity : AppCompatActivity() {
     //onResumeメソッドのオーバーライド
     override fun onResume() {
         super.onResume()
-//効果音を出すためのクラス：Soundpoolの準備
-        val soundPool = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+        //効果音を出すためのクラス：Soundpoolの準備
+        soundPool =  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             SoundPool.Builder().setAudioAttributes(
                 AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_MEDIA)
-                    .build()
-            )
+                .setUsage(AudioAttributes.USAGE_MEDIA)
+                .build())
                 .setMaxStreams(1)
                 .build()
         } else {
             SoundPool(1, AudioManager.STREAM_MUSIC, 0)
         }
+
 //    効果音ファイルをメモリにロードしてサウンドIDをゲットする
         val soundId = soundPool.load(this, R.raw._game_healer_attack3, 1)
         val soundId2 = soundPool.load(this, R.raw._game_healer_special1, 1)
